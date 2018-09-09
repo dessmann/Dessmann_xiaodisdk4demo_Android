@@ -1,0 +1,79 @@
+sdk使用方法
+1、全局加载sdk
+BLELoader.init()
+
+2、添加锁
+Xiaodi4ApiRequestFactory.Companion.getInstance().getRegisterLockRequest("", "", false, new OnAddDeviceListener() {
+            @Override
+            public void addSuccess(@Nullable String lockMac, @Nullable String rootKey, @Nullable String lockSn, @Nullable String lockChannelPassword, @Nullable String lockSoftwareVersion, @Nullable String lockSeid) {
+
+            }
+
+            @Override
+            public void addFailure(@Nullable Integer errCode) {
+
+            }
+        }).request();
+
+3、开锁
+Xiaodi4ApiRequestFactory.Companion.getInstance().getOpenLockRequest("", "", "", false, "", new OnOpenListener() {
+            @Override
+            public void openSuccess(@NotNull Object obj) {
+
+            }
+
+            @Override
+            public void openFail(int errorCode) {
+
+            }
+        }).request();
+
+4、配置锁
+(1).时间同步
+XiaodiBleFactory.Companion.getInstance().timeSync_0x23("", new OnResponseListener() {
+            @Override
+            public void onSuccess(@Nullable Object obj) {
+
+            }
+
+            @Override
+            public void onFail(int errorCode) {
+
+            }
+        });
+
+(2).录指纹
+XiaodiBleFactory.Companion.getInstance().inputFinger_0x24("", new OnXIAODIBLECollectFingerListener() {
+            @Override
+            public void onCollectFailure(@NotNull String errorMsg, int loglevel) {
+
+            }
+
+            @Override
+            public void onTemplateCollectSuccess(long fingerCollectionCcount, @NotNull XIAODIBLEDataReceivedAnalyzer XIAODIBLEDataReceivedAnalyzer) {
+
+            }
+
+            @Override
+            public void onCollectSuccess(@NotNull String generatedFingerID, long fingerCollectionCount, @NotNull XIAODIBLEDataReceivedAnalyzer XIAODIBLEDataReceivedAnalyzer) {
+
+            }
+        });
+
+(3).更多api请参考api文档以下两个接口的说明
+ com.dsm.xiaodisdk4.api.Xiaodi4ApiRequest
+ com.dsm.xiaodisdk4.api.XiaodiBle
+
+5.关于锁具开门记录查询的说明
+请确认锁是否支持F7配置推送域名的指令
+(1)、如果支持，请调用该接口，把锁的消息推送服务器的地址修改为你们自己的服务器
+(2)、如果不支持，请走以下接口拉取锁的开门记录
+url:
+https://xiaodi.dsmzg.com/locklog/queryDoorLog
+请求方式：post
+请求参数：
+lockseq 锁的mac地址
+page 分页查询的页码
+rows 分页查询每页的记录条数
+请求参数格式：x-www-form-urlencoded
+响应数据为json格式，请自行解析
