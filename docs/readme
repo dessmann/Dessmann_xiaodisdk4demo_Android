@@ -67,13 +67,5 @@ XiaodiBleFactory.Companion.getInstance().inputFinger_0x24("", new OnXIAODIBLECol
 5.关于锁具开门记录查询的说明
 请确认锁是否支持F7配置推送域名的指令
 (1)、如果支持，请调用该接口，把锁的消息推送服务器的地址修改为你们自己的服务器
-(2)、如果不支持，请走以下接口拉取锁的开门记录
-url:
-https://xiaodi.dsmzg.com/locklog/queryDoorLog
-请求方式：post
-请求参数：
-lockseq 锁的mac地址
-page 分页查询的页码
-rows 分页查询每页的记录条数
-请求参数格式：x-www-form-urlencoded
-响应数据为json格式，请自行解析
+(2)、如果不支持，请参考docs文件夹的《日志对外接口》文档拉取锁的开门记录
+
