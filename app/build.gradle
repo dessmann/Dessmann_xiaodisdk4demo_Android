@@ -39,8 +39,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    api (name:'AndroidXiaodisdk4-release-4.0.0',ext:'aar')
-    api (name:'lible-release-alpha',ext:'aar')
+    api (name:'AndroidXiaodisdk4-release-4.0.1',ext:'aar')
+    api (name:'lible-release-alpha-1.0',ext:'aar')
     api 'com.blankj:utilcode:1.20.1'
     api('no.nordicsemi.android:dfu:0.6.2',{
         exclude group:'com.android.support'

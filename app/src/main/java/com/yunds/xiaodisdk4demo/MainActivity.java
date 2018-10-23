@@ -5,9 +5,9 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.bluetoothle.core.BLELoader;
 import com.dsm.xiaodisdk4.base.Xiaodi4ApiRequestFactory;
 import com.dsm.xiaodisdk4.base.XiaodiBleFactory;
@@ -22,6 +22,8 @@ import org.jetbrains.annotations.NotNull;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+    private static final String mac = "FE:0A:A3:D2:97:8E";
+    private static final String openPwd = "12345800";
 
     Dialog dialog;
 
@@ -82,14 +84,31 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void addSuccess(@Nullable String lockMac, @Nullable String rootKey, @Nullable String lockSn, @Nullable String lockChannelPassword, @Nullable String lockSoftwareVersion, @Nullable String lockSeid) {
                 dialog.dismiss();
-                LogUtils.i(TAG, "lockMac=" + lockMac + ",rootKey=" + rootKey + ",lockSn=" + lockSn + ",lockChannelPassword=" + lockChannelPassword + ",lockSoftwareVersion=" + lockSoftwareVersion + ",lockSeid=" + lockSeid);
+                Log.i(TAG, "lockMac=" + lockMac + ",rootKey=" + rootKey + ",lockSn=" + lockSn + ",lockChannelPassword=" + lockChannelPassword + ",lockSoftwareVersion=" + lockSoftwareVersion + ",lockSeid=" + lockSeid);
             }
 
             @Override
             public void addFailure(@Nullable Integer errCode) {
                 dialog.dismiss();
-                LogUtils.e(TAG, "errorCode=" + errCode);
+                Log.e(TAG, "errorCode=" + errCode);
             }
         }).request();
+    }
+
+    public void onSettingOpenPwdClick(View view) {
+        dialog.show();
+        XiaodiBleFactory.Companion.getInstance().updateLockOpenPwd_0x30(mac, openPwd.getBytes(), new OnResponseListener() {
+            @Override
+            public void onSuccess(Object o) {
+                dialog.dismiss();
+                Log.i(TAG, "success," + o);
+            }
+
+            @Override
+            public void onFail(int i) {
+                dialog.dismiss();
+                Log.e(TAG, "errorCode=" + i);
+            }
+        });
     }
 }
